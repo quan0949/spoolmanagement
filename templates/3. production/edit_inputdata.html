@@ -1,0 +1,142 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %} id="editModal{{ production.pk }}" {% endblock modal-id %} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-5" id="editModalLable">
+              {% block modal-title %}<i class="fas fa-edit"></i>&nbsp;&nbsp; Sửa dữ liệu {% endblock modal-title %}
+              <br><br>
+              {% block Value-id  %} 
+              <div class="input-group" style="width: 100px;">
+                    <span class="btn border-secondary bg-light"><strong>ID</strong></span>  
+                    <input type="text" class="form-control" name="id" value="{{ production.id }}" readonly>
+              </div>    
+              {% endblock Value-id %}  
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container-fluid">
+            <form class="" method="POST" {% block action %} action="/edit_production_data/{{ production.id }}" {% endblock action %} autocomplete="off">
+                {% csrf_token %} 
+                <div class="row">
+                    <!-- Block ID (Root) -->
+                    <div class="col col-6">
+                        <!-- Column 1 -->
+                        <div class="input-group mb-2">
+                            <span class="input-group-text col-4" id="inputGroup-sizing-default">Ngày SX</span>
+                            <input type="date" name="issue_date" 
+                            class="form-control col-8" 
+                            required {% block Value-issue_date  %} value="{{ production.issue_date }}" {% endblock Value-issue_date %}
+                        />
+                        </div>
+                        <div class="input-group mb-2">
+                        <label class="input-group-text col-4">Ca SX</label>
+                        <select class="form-select col-8" id="shift-no">
+                            <option value="1" selected>Ca HC</option>
+                            <option value="2">Ca 1</option>
+                            <option value="3">Ca 2</option>
+                        </select>
+                        </div>
+                        <div class="input-group mb-2">
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">Nhân viên</span>
+                        <input
+                            type="text"
+                            name="employee_name"
+                            class="form-control col-8"
+                            placeholder="Tên nhân viên"
+                            required {% block Value-employee_name  %} value="{{ production.employee_name }}" {% endblock Value-employee_name %}/>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text col-4" id="inputGroup-sizing-default">CTSX</span>
+                            <input
+                            type="text"
+                            name="production_code"
+                            class="form-control col-8"
+                            placeholder="Nhập mã CTSX"
+                            required {% block Value-production_code  %} value="{{ production.production_code }}" {% endblock Value-production_code  %}
+                            />
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text col-4" id="inputGroup-sizing-default">Mã SP</span>
+                            <input
+                            type="text"
+                            name="product_code"
+                            class="form-control col-8"
+                            placeholder="Điền tự động"
+                            required {% block Value-product_code  %} value="{{ production.product_code }}" {% endblock Value-product_code  %}
+                            />
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text col-4" id="inputGroup-sizing-default">TG SX</span>
+                            <input
+                            type="number"
+                            name="production_time"
+                            class="form-control col-8"
+                            required {% block Value-production_time  %} value="{{ production.production_time }}" {% endblock Value-production_time  %}
+                            />
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                        <!-- Column 2 -->
+                        <div class="input-group mb-5">
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">SL SX</span>
+                        <input
+                            type="number"
+                            name="product_quantity"
+                            class="form-control col-8"
+                            required {% block Value-product_quantity  %} value="{{ production.product_quantity }}" {% endblock Value-product_quantity  %}
+                        />
+                        </div>
+                        <div class="input-group mb-2">
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">SL NG</span>
+                        <input
+                            type="number"
+                            name="ng_quantity"
+                            class="form-control col-8"
+                            required {% block Value-ng_quantity  %} value="{{ production.ng_quantity }}" {% endblock Value-ng_quantity  %}
+                        />
+                        </div>
+                        <div class="input-group mb-2">
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">Công đoạn</span>
+                        <input
+                            type="text"
+                            name="stage"
+                            class="form-control col-8"
+                            placeholder="Điền công đoạn"
+                            required {% block Value-stage %} value="{{ production.stage }}" {% endblock Value-stage %}
+                        />
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text col-4" id="inputGroup-sizing-default">Mã thùng</span
+                            >
+                            <input
+                            type="text"
+                            name="basket"
+                            class="form-control col-8"
+                            placeholder="Điền mã thùng"
+                            required {% block Value-basket %} value="{{ production.basket }}" {% endblock Value-basket %}
+                            />
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text col-4" id="inputGroup-sizing-default">Phiếu DCCĐ</span>
+                            <input
+                            type="text"
+                            name="note"
+                            class="form-control col-8"
+                            placeholder="Điền phiếu"
+                            required {% block Value-note %} value="{{ production.note }}" {% endblock Value-note %}
+                            />
+                        </div>
+                        <div class="input-group mb-2">
+                            <button type="submit" class="form-control btn-send text-white">
+                            {% block bnt-action  %}<i class="fas fa-server"></i>&nbsp;&nbsp; CẬP NHẬT DỮ LIỆU {% endblock bnt-action  %}
+                            </button>  
+                
+                        </div>
+                    </div>
+                </div>
+            </form> 
+        </div>
+      </div>
+    </div>
+</div>

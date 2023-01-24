@@ -1,0 +1,662 @@
+{% extends 'partials/base.html' %} 
+{% load static %} 
+{% block title %}Data Page{% endblock %} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/css/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="content-body">
+
+  <!-- Page Headings Start -->
+  <div class="row justify-content-between align-items-center mb-10">
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+      <div class="page-heading">
+        <h3 class="title">QLSX Spool <span>/ Dữ liệu sản xuất</span></h3>
+      </div>
+    </div>
+    <!-- Page Heading End -->
+  </div>
+  <!-- Page Headings End -->
+  <br>
+  <!-- Total data Chart Start-->
+  <div class="row mb-20">
+    <!-- Revenue Statistics Chart Start -->
+    <div class="col-12 mb-20" >
+        <div class="box" style="border:1px solid #b4b5b8; border-radius: 25px;">
+          <div class="box-head">
+            <h4 class="title">Biểu đồ sản xuất Spool tổng</h4>
+          </div>
+          <div class="box-body">
+              <div class="chart-legends-1 row">
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Kế hoạch sản xuất</h5>
+                      <h3 class="value text-primary">257,200 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Thực tích sản xuất</h5>
+                      <h3 class="value text-warning">240,320 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title"></h5>
+                      <h3 class="value text-warning"></h3>
+                  </div>
+              </div>
+              <div class="chartjs-revenue-statistics-chart">
+                  <canvas id="myChart"></canvas>
+                  <script src="{% static '/js/plugins/chartjs/chart.js' %}"></script>
+                    <script>
+                      var RSC = document.getElementById('myChart').getContext('2d');
+                      var RSCconfig = {
+                          type: 'line',
+                          data: {
+                              labels: [{% for data in total_data_list%} '{{ data.issue_date | date:'d/m/Y' }}', {% endfor %}],
+                              datasets: [{
+                                  label: 'Kế hoạch',
+                                  data: [{% for data in total_data_list %} '{{ data.sum }}', {% endfor %}],
+                                  backgroundColor: '#428bfa',
+                                  borderColor: '#428bfa',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#428bfa',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 5,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              },
+                              {
+                                  label: 'Thực tích',
+                                  data: [],
+                                  backgroundColor: '#ff9666',
+                                  borderColor: '#ff9666',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#ff9666',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 6,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              }]
+                          },
+                          options: {
+                              maintainAspectRatio: false,
+                              legend: {
+                                  display: true,
+                                  labels: {
+                                      fontColor: '#aaaaaa',
+                                  }
+                              },
+                              tooltips: {
+                                  mode: 'point',
+                                  intersect: false,
+                                  xPadding: 10,
+                                  yPadding: 10,
+                                  caretPadding: 10,
+                                  cornerRadius: 4,
+                                  titleFontSize: 0,
+                                  titleMarginBottom: 2,
+                                  displayColors: false,
+                              },
+                              hover: {
+                                  mode: 'nearest',
+                                  intersect: true
+                              },
+                              scales: {
+                                  x: {
+                                      display: true,
+                                      gridLines: {
+                                          display: false
+                                      },
+                                      ticks: {
+                                          fontColor: '#aaaaaa',
+                                      },
+                                  },
+                                  y : {
+                                      display: true,
+                                      gridLines: {
+                                          color: 'rgba(136,136,136,0.1)',
+                                          lineWidth: 3,
+                                          drawBorder: false,
+                                          zeroLineWidth: 3,
+                                          zeroLineColor: 'rgba(136,136,136,0.1)',
+                                      },
+                                      ticks: {
+                                          padding: 15,
+                                          stepSize: 2000,
+                                          fontColor: '#aaaaaa',
+                                      },
+                                      min: 0, // minimum value
+                                  },
+                              },
+                          }
+                      };
+                      var RSCchartjs = new Chart(RSC, RSCconfig);
+                    </script>  
+              </div>
+          </div>
+        </div>
+    </div><!-- Revenue Statistics Chart End -->
+  </div>
+  <!-- Total data Chart End-->
+
+
+  <!-- SY3000 and SY5000 data Chart Start-->
+  <div class="row mb-20">
+    <!-- Revenue Statistics Chart Start -->
+    <div class="col-md-6 mb-20">
+        <div class="box" style="border:1px solid #b4b5b8; border-radius: 25px;">
+          <div class="box-head">
+            <h4 class="title">Biểu đồ sản xuất Spool SY3000</h4>
+          </div>
+          <div class="box-body">
+              <div class="chart-legends-1 row">
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Kế hoạch sản xuất</h5>
+                      <h3 class="value text-primary">257,200 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Thực tích sản xuất</h5>
+                      <h3 class="value text-warning">240,320 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title"></h5>
+                      <h3 class="value text-warning"></h3>
+                  </div>
+              </div>
+              <div class="chartjs-series-chart">
+                  <canvas id="sy3000Chart"></canvas>
+                  <script src="{% static '/js/plugins/chartjs/chart.js' %}"></script>
+                    <script>
+                      var RSC = document.getElementById('sy3000Chart').getContext('2d');
+                      var RSCconfig = {
+                          type: 'line',
+                          data: {
+                              labels: [{% for data in sy3000_data_list%} '{{ data.issue_date | date:'d/m/Y'}}', {% endfor %}],
+                              datasets: [{
+                                  label: 'Kế hoạch',
+                                  data: [{% for data in sy3000_data_list %} '{{ data.sum }}', {% endfor %}],
+                                  backgroundColor: '#428bfa',
+                                  borderColor: '#428bfa',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#428bfa',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 5,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              },
+                              {
+                                  label: 'Thực tích',
+                                  data: [],
+                                  backgroundColor: '#ff9666',
+                                  borderColor: '#ff9666',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#ff9666',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 6,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              }]
+                          },
+                          options: {
+                              maintainAspectRatio: false,
+                              legend: {
+                                  display: true,
+                                  labels: {
+                                      fontColor: '#aaaaaa',
+                                  }
+                              },
+                              tooltips: {
+                                  mode: 'point',
+                                  intersect: false,
+                                  xPadding: 10,
+                                  yPadding: 10,
+                                  caretPadding: 10,
+                                  cornerRadius: 4,
+                                  titleFontSize: 0,
+                                  titleMarginBottom: 2,
+                                  displayColors: false,
+                              },
+                              hover: {
+                                  mode: 'nearest',
+                                  intersect: true
+                              },
+                              scales: {
+                                  x: {
+                                      display: true,
+                                      gridLines: {
+                                          display: false
+                                      },
+                                      ticks: {
+                                          fontColor: '#aaaaaa',
+                                      },
+                                  },
+                                  y : {
+                                      display: true,
+                                      gridLines: {
+                                          color: 'rgba(136,136,136,0.1)',
+                                          lineWidth: 3,
+                                          drawBorder: false,
+                                          zeroLineWidth: 3,
+                                          zeroLineColor: 'rgba(136,136,136,0.1)',
+                                      },
+                                      ticks: {
+                                          padding: 15,
+                                          stepSize: 2000,
+                                          fontColor: '#aaaaaa',
+                                      },
+                                      min: 0, // minimum value
+                                  },
+                              }
+                          }
+                      };
+                      var RSCchartjs = new Chart(RSC, RSCconfig);
+                    </script>  
+              </div>
+          </div>
+        </div>
+    </div><!-- Revenue Statistics Chart End -->
+
+     <!-- Revenue Statistics Chart Start -->
+     <div class="col-md-6 mb-20">
+        <div class="box" style="border:1px solid #b4b5b8; border-radius: 25px;">
+          <div class="box-head">
+            <h4 class="title">Biểu đồ sản xuất Spool SY5000</h4>
+          </div>
+          <div class="box-body">
+              <div class="chart-legends-1 row">
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Kế hoạch sản xuất</h5>
+                      <h3 class="value text-primary">257,200 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Thực tích sản xuất</h5>
+                      <h3 class="value text-warning">240,320 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title"></h5>
+                      <h3 class="value text-warning"></h3>
+                  </div>
+              </div>
+              <div class="chartjs-series-chart">
+                  <canvas id="sy5000Chart"></canvas>
+                  <script src="{% static '/js/plugins/chartjs/chart.js' %}"></script>
+                    <script>
+                      var RSC = document.getElementById('sy5000Chart').getContext('2d');
+                      var RSCconfig = {
+                          type: 'line',
+                          data: {
+                              labels: [{% for data in sy5000_data_list%} '{{ data.issue_date | date:'d/m/Y'}}', {% endfor %}],
+                              datasets: [{
+                                  label: 'Kế hoạch',
+                                  data: [{% for data in sy5000_data_list %} '{{ data.sum }}', {% endfor %}],
+                                  backgroundColor: '#428bfa',
+                                  borderColor: '#428bfa',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#428bfa',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 5,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              },
+                              {
+                                  label: 'Thực tích',
+                                  data: [],
+                                  backgroundColor: '#ff9666',
+                                  borderColor: '#ff9666',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#ff9666',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 6,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              }]
+                          },
+                          options: {
+                              maintainAspectRatio: false,
+                              legend: {
+                                  display: true,
+                                  labels: {
+                                      fontColor: '#aaaaaa',
+                                  }
+                              },
+                              tooltips: {
+                                  mode: 'point',
+                                  intersect: false,
+                                  xPadding: 10,
+                                  yPadding: 10,
+                                  caretPadding: 10,
+                                  cornerRadius: 4,
+                                  titleFontSize: 0,
+                                  titleMarginBottom: 2,
+                                  displayColors: false,
+                              },
+                              hover: {
+                                  mode: 'nearest',
+                                  intersect: true
+                              },
+                              scales: {
+                                  x: {
+                                      display: true,
+                                      gridLines: {
+                                          display: false
+                                      },
+                                      ticks: {
+                                          fontColor: '#aaaaaa',
+                                      },
+                                  },
+                                  y : {
+                                      display: true,
+                                      gridLines: {
+                                          color: 'rgba(136,136,136,0.1)',
+                                          lineWidth: 3,
+                                          drawBorder: false,
+                                          zeroLineWidth: 3,
+                                          zeroLineColor: 'rgba(136,136,136,0.1)',
+                                      },
+                                      ticks: {
+                                          padding: 15,
+                                          stepSize: 2000,
+                                          fontColor: '#aaaaaa',
+                                      },
+                                      min: 0, // minimum value
+                                  },
+                              }
+                          }
+                      };
+                      var RSCchartjs = new Chart(RSC, RSCconfig);
+                    </script>  
+              </div>
+          </div>
+        </div>
+    </div><!-- Revenue Statistics Chart End -->
+    
+  </div>
+  <!-- SY3000 and SY5000 data Chart End-->
+
+  <!-- SY7000 and SY900 data Chart Start-->
+  <div class="row mb-20">
+    <!-- Revenue Statistics Chart Start -->
+    <div class="col-md-6 mb-20">
+        <div class="box" style="border:1px solid #b4b5b8; border-radius: 25px;">
+          <div class="box-head">
+            <h4 class="title">Biểu đồ sản xuất Spool SY7000</h4>
+          </div>
+          <div class="box-body">
+              <div class="chart-legends-1 row">
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Kế hoạch sản xuất</h5>
+                      <h3 class="value text-primary">257,200 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Thực tích sản xuất</h5>
+                      <h3 class="value text-warning">240,320 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title"></h5>
+                      <h3 class="value text-warning"></h3>
+                  </div>
+              </div>
+              <div class="chartjs-series-chart">
+                  <canvas id="sy7000Chart"></canvas>
+                  <script src="{% static '/js/plugins/chartjs/chart.js' %}"></script>
+                    <script>
+                      var RSC = document.getElementById('sy7000Chart').getContext('2d');
+                      var RSCconfig = {
+                          type: 'line',
+                          data: {
+                              labels: [{% for data in sy7000_data_list%} '{{ data.issue_date | date:'d/m/Y'}}', {% endfor %}],
+                              datasets: [{
+                                  label: 'Kế hoạch',
+                                  data: [{% for data in sy7000_data_list %} '{{ data.sum }}', {% endfor %}],
+                                  backgroundColor: '#428bfa',
+                                  borderColor: '#428bfa',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#428bfa',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 5,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              },
+                              {
+                                  label: 'Thực tích',
+                                  data: ['4000', '8000', '9000'],
+                                  backgroundColor: '#ff9666',
+                                  borderColor: '#ff9666',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#ff9666',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 6,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              }]
+                          },
+                          options: {
+                              maintainAspectRatio: false,
+                              legend: {
+                                  display: true,
+                                  labels: {
+                                      fontColor: '#aaaaaa',
+                                  }
+                              },
+                              tooltips: {
+                                  mode: 'point',
+                                  intersect: false,
+                                  xPadding: 10,
+                                  yPadding: 10,
+                                  caretPadding: 10,
+                                  cornerRadius: 4,
+                                  titleFontSize: 0,
+                                  titleMarginBottom: 2,
+                                  displayColors: false,
+                              },
+                              hover: {
+                                  mode: 'nearest',
+                                  intersect: true
+                              },
+                              scales: {
+                                  x: {
+                                      display: true,
+                                      gridLines: {
+                                          display: false
+                                      },
+                                      ticks: {
+                                          fontColor: '#aaaaaa',
+                                      },
+                                  },
+                                  y : {
+                                      display: true,
+                                      gridLines: {
+                                          color: 'rgba(136,136,136,0.1)',
+                                          lineWidth: 3,
+                                          drawBorder: false,
+                                          zeroLineWidth: 3,
+                                          zeroLineColor: 'rgba(136,136,136,0.1)',
+                                      },
+                                      ticks: {
+                                          padding: 15,
+                                          stepSize: 2000,
+                                          fontColor: '#aaaaaa',
+                                      },
+                                      min: 0, // minimum value
+                                  },
+                              }
+                          }
+                      };
+                      var RSCchartjs = new Chart(RSC, RSCconfig);
+                    </script>  
+              </div>
+          </div>
+        </div>
+    </div><!-- Revenue Statistics Chart End -->
+
+    <!-- Revenue Statistics Chart Start -->
+    <div class="col-md-6 mb-20">
+        <div class="box" style="border:1px solid #b4b5b8; border-radius: 25px;">
+          <div class="box-head">
+            <h4 class="title">Biểu đồ sản xuất Spool SY9000</h4>
+          </div>
+          <div class="box-body">
+              <div class="chart-legends-1 row">
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Kế hoạch sản xuất</h5>
+                      <h3 class="value text-primary">257,200 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title">Thực tích sản xuất</h5>
+                      <h3 class="value text-warning">240,320 pcs</h3>
+                  </div>
+                  <div class="chart-legend-1 col-12 col-sm-4">
+                      <h5 class="title"></h5>
+                      <h3 class="value text-warning"></h3>
+                  </div>
+              </div>
+              <div class="chartjs-series-chart">
+                  <canvas id="sy9000Chart"></canvas>
+                  <script src="{% static '/js/plugins/chartjs/chart.js' %}"></script>
+                    <script>
+                      var RSC = document.getElementById('sy9000Chart').getContext('2d');
+                      var RSCconfig = {
+                          type: 'line',
+                          data: {
+                              labels: [{% for data in sy9000_data_list%} '{{ data.issue_date | date:'d/m/Y'}}', {% endfor %}],
+                              datasets: [{
+                                  label: 'Kế hoạch',
+                                  data: [{% for data in sy9000_data_list %} '{{ data.sum }}', {% endfor %}],
+                                  backgroundColor: '#428bfa',
+                                  borderColor: '#428bfa',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#428bfa',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 5,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              },
+                              {
+                                  label: 'Thực tích',
+                                  data: ['4000', '8000', '9000'],
+                                  backgroundColor: '#ff9666',
+                                  borderColor: '#ff9666',
+                                  borderWidth: 3,
+                                  pointBackgroundColor: '#ffffff',
+                                  pointBorderColor: '#ff9666',
+                                  pointBorderWidth: 3,
+                                  pointRadius: 6,
+                                  pointHoverBackgroundColor: '#ffffff',
+                                  pointHoverBorderWidth: 3,
+                                  pointHoverRadius: 6,
+                                  fill: false,
+                                  lineTension: 0
+                              }]
+                          },
+                          options: {
+                              maintainAspectRatio: false,
+                              legend: {
+                                  display: true,
+                                  labels: {
+                                      fontColor: '#aaaaaa',
+                                  }
+                              },
+                              tooltips: {
+                                  mode: 'point',
+                                  intersect: false,
+                                  xPadding: 10,
+                                  yPadding: 10,
+                                  caretPadding: 10,
+                                  cornerRadius: 4,
+                                  titleFontSize: 0,
+                                  titleMarginBottom: 2,
+                                  displayColors: false,
+                              },
+                              hover: {
+                                  mode: 'nearest',
+                                  intersect: true
+                              },
+                              scales: {
+                                  x: {
+                                      display: true,
+                                      gridLines: {
+                                          display: false
+                                      },
+                                      ticks: {
+                                          fontColor: '#aaaaaa',
+                                      },
+                                  },
+                                  y : {
+                                      display: true,
+                                      gridLines: {
+                                          color: 'rgba(136,136,136,0.1)',
+                                          lineWidth: 3,
+                                          drawBorder: false,
+                                          zeroLineWidth: 3,
+                                          zeroLineColor: 'rgba(136,136,136,0.1)',
+                                      },
+                                      ticks: {
+                                          padding: 15,
+                                          stepSize: 2000,
+                                          fontColor: '#aaaaaa',
+                                      },
+                                      min: 0, // minimum value
+                                  },
+                              }
+                          }
+                      };
+                      var RSCchartjs = new Chart(RSC, RSCconfig);
+                    </script>  
+              </div>
+          </div>
+        </div>
+    </div><!-- Revenue Statistics Chart End -->
+  </div>
+  <!-- SY7000 and SY900 data Chart End-->
+</div>
+
+{% endblock %}
+
+{% block js %}
+  <!-- Plugins & Activation JS For Only This Page -->
+
+  <!--Moment-->
+  
+
+  <!--Echarts-->
+  <script src="{% static '/js/plugins/chartjs/Chart.min.js' %}"></script>
+  <script src="{% static '/js/plugins/chartjs/chartjs.active.js' %}"></script>
+
+  {% endblock %}

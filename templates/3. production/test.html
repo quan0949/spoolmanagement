@@ -1,0 +1,257 @@
+<!-- Modal -->
+<div class="modal fade" {% block modal-id %} id="editPlanModal{{ view_plan.pk }}" {% endblock modal-id %} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-size">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fs-5" id="editModalLabel">
+            {% block modal-title %}<i class="fas fa-edit"></i>&nbsp;&nbsp; Cập nhật ngày sản xuất {% endblock modal-title %}
+            <br><br>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col col-3 input-group mb-2"> 
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">CTSX</span>
+                        <input type="text" name="production_code" 
+                            class="form-control col-8" 
+                            required {% block Value-production_code  %} value="{{ view_plan.production_code }}" {% endblock Value-production_code %}
+                        />    
+                    </div>
+                    <div class="col col-3 input-group mb-2"> 
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">Mã SP</span>
+                        <input type="text" name="product_code" 
+                            class="form-control col-8" 
+                            required {% block Value-product_code  %} value="{{ view_plan.product_code }}" {% endblock Value-product_code %}
+                        />    
+                    </div>
+                    <div class="col col-3 input-group mb-2"> 
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">Số lượng</span>
+                        <input type="text" name="product_quantity" 
+                            class="form-control col-8" 
+                            required {% block Value-product_quantity  %} value="{{ view_plan.product_quantity }}" {% endblock Value-product_quantity %}
+                        />    
+                    </div>
+                    <div class="col col-3 input-group mb-2"> 
+                        <span class="input-group-text col-4" id="inputGroup-sizing-default">Dòng SP</span>
+                        <input type="text" name="product_series" 
+                            class="form-control col-8" 
+                            required {% block Value-product_series  %} value="{{ view_plan.product_series }}" {% endblock Value-product_series %}
+                        />    
+                    </div>
+                </div>    
+            </div>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="container-fluid">
+          <form class="form-edit" method="POST" {% block action %} action="/edit_production_plan/{{ view_plan.id }}" {% endblock action %} autocomplete="off">
+              {% csrf_token %} 
+              <div class="row">
+                  <!-- Block ID (Root) -->
+                  <div class="col col-4">
+                      <!-- Column 1 -->
+                      <div class="input-group col-mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 01</span>
+                        <input type="text" name="day_1" 
+                            class="form-control col-3" 
+                            required {% block Value-day_1  %} value="{{ view_plan.day_1 }}" {% endblock Value-day_1 %}/> 
+                      </div>
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 02</span>
+                        <input type="text" name="day_2" 
+                            class="form-control col-3" 
+                            required {% block Value-day_2  %} value="{{ view_plan.day_2 }}" {% endblock Value-day_2 %}/>
+                      </div> 
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 03</span>
+                        <input type="text" name="day_3" 
+                            class="form-control col-3" 
+                            required {% block Value-day_3  %} value="{{ view_plan.day_3 }}" {% endblock Value-day_3 %}/>
+                      </div>      
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 04</span>
+                        <input type="text" name="day_4" 
+                            class="form-control col-3" 
+                            required {% block Value-day_4  %} value="{{ view_plan.day_4 }}" {% endblock Value-day_4 %}/>
+                      </div> 
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 05</span>
+                        <input type="text" name="day_5" 
+                            class="form-control col-3" 
+                            required {% block Value-day_5  %} value="{{ view_plan.day_5 }}" {% endblock Value-day_5 %}/>
+                      </div>                       
+                  </div>
+                  <div class="col col-4">
+                    <!-- Column 2 -->
+                    <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 06</span>
+                        <input type="text" name="day_6" 
+                            class="form-control col-3" 
+                            required {% block Value-day_6  %} value="{{ view_plan.day_6 }}" {% endblock Value-day_6 %}/>
+                    </div>   
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 07</span>
+                      <input type="text" name="day_7" 
+                          class="form-control col-3" 
+                          required {% block Value-day_7  %} value="{{ view_plan.day_7 }}" {% endblock Value-day_7 %}/>
+                    </div> 
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 08</span>
+                      <input type="text" name="day_8" 
+                          class="form-control col-3" 
+                          required {% block Value-day_8  %} value="{{ view_plan.day_8 }}" {% endblock Value-day_8 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 09</span>
+                      <input type="text" name="day_9" 
+                          class="form-control col-3" 
+                          required {% block Value-day_9  %} value="{{ view_plan.day_9 }}" {% endblock Value-day_9 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 10</span>
+                      <input type="text" name="day_10" 
+                          class="form-control col-3" 
+                          required {% block Value-day_10  %} value="{{ view_plan.day_10 }}" {% endblock Value-day_10 %}/>
+                    </div>              
+                  </div>
+                  <div class="col col-4">
+                    <!-- Column 3 -->
+                    <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 11</span>
+                        <input type="text" name="day_11" 
+                            class="form-control col-3" 
+                            required {% block Value-day_11  %} value="{{ view_plan.day_11 }}" {% endblock Value-day_11 %}/>
+                      </div>  
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 12</span>
+                        <input type="text" name="day_12" 
+                            class="form-control col-3" 
+                            required {% block Value-day_12  %} value="{{ view_plan.day_12 }}" {% endblock Value-day_12 %}/>
+                      </div>            
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 13</span>
+                      <input type="text" name="day_13" 
+                          class="form-control col-3" 
+                          required {% block Value-day_13  %} value="{{ view_plan.day_13 }}" {% endblock Value-day_13 %}/>
+                    </div> 
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 14</span>
+                      <input type="text" name="day_14" 
+                          class="form-control col-3" 
+                          required {% block Value-day_14  %} value="{{ view_plan.day_14 }}" {% endblock Value-day_14 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 15</span>
+                      <input type="text" name="day_15" 
+                          class="form-control col-3" 
+                          required {% block Value-day_15  %} value="{{ view_plan.day_15 }}" {% endblock Value-day_15 %}/>
+                    </div>       
+                  </div>
+                  <div class="col col-4">
+                    <!-- Column 4 -->
+                    <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 16</span>
+                        <input type="text" name="day_16" 
+                            class="form-control col-3" 
+                            required {% block Value-day_16  %} value="{{ view_plan.day_16 }}" {% endblock Value-day_16 %}/>
+                      </div>  
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 17</span>
+                        <input type="text" name="day_17" 
+                            class="form-control col-3" 
+                            required {% block Value-day_17  %} value="{{ view_plan.day_17 }}" {% endblock Value-day_17 %}/>
+                      </div>  
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 18</span>
+                        <input type="text" name="day_18" 
+                            class="form-control col-3" 
+                            required {% block Value-day_18  %} value="{{ view_plan.day_18 }}" {% endblock Value-day_18 %}/>
+                      </div>                   
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 19</span>
+                      <input type="text" name="day_19" 
+                          class="form-control col-3" 
+                          required {% block Value-day_19  %} value="{{ view_plan.day_19 }}" {% endblock Value-day_19 %}/>
+                    </div> 
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 20</span>
+                      <input type="text" name="day_20" 
+                          class="form-control col-3" 
+                          required {% block Value-day_20  %} value="{{ view_plan.day_20 }}" {% endblock Value-day_20 %}/>
+                    </div>  
+                  </div>
+                  <div class="col col-4">
+                    <!-- Column 5 -->
+                    <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 21</span>
+                        <input type="text" name="day_21" 
+                            class="form-control col-3" 
+                            required {% block Value-day_21  %} value="{{ view_plan.day_21 }}" {% endblock Value-day_21 %}/>
+                      </div>  
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 22</span>
+                        <input type="text" name="day_22" 
+                            class="form-control col-3" 
+                            required {% block Value-day_22  %} value="{{ view_plan.day_22 }}" {% endblock Value-day_22 %}/>
+                      </div>  
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 23</span>
+                        <input type="text" name="day_23" 
+                            class="form-control col-3" 
+                            required {% block Value-day_23  %} value="{{ view_plan.day_23 }}" {% endblock Value-day_23 %}/>
+                      </div>  
+                      <div class="input-group mb-2"> 
+                        <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 24</span>
+                        <input type="text" name="day_24" 
+                            class="form-control col-3" 
+                            required {% block Value-day_24  %} value="{{ view_plan.day_24 }}" {% endblock Value-day_24 %}/>
+                      </div>                        
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 25</span>
+                      <input type="text" name="day_25" 
+                          class="form-control col-3" 
+                          required {% block Value-day_25  %} value="{{ view_plan.day_25 }}" {% endblock Value-day_25 %}/>
+                    </div> 
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 26</span>
+                      <input type="text" name="day_26" 
+                          class="form-control col-3" 
+                          required {% block Value-day_26  %} value="{{ view_plan.day_26 }}" {% endblock Value-day_26 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 27</span>
+                      <input type="text" name="day_27" 
+                          class="form-control col-3" 
+                          required {% block Value-day_27  %} value="{{ view_plan.day_27 }}" {% endblock Value-day_27 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 28</span>
+                      <input type="text" name="day_28" 
+                          class="form-control col-3" 
+                          required {% block Value-day_28  %} value="{{ view_plan.day_28 }}" {% endblock Value-day_28 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 29</span>
+                      <input type="text" name="day_29" 
+                          class="form-control col-3" 
+                          required {% block Value-day_29  %} value="{{ view_plan.day_29 }}" {% endblock Value-day_29 %}/>
+                    </div>  
+                    <div class="input-group mb-2"> 
+                      <span class="input-group-text col-3" id="inputGroup-sizing-default">Ngày 30</span>
+                      <input type="text" name="day_24" 
+                          class="form-control col-3" 
+                          required {% block Value-day_30  %} value="{{ view_plan.day_30 }}" {% endblock Value-day_30 %}/>
+                    </div>                        
+                  </div>
+                  <div class="col col-4">       
+                    <!-- Column 3 -->  
+                      <div class="input-group mb-2">
+                          <button type="submit" class="form-control btn-send text-white">
+                          {% block bnt-action  %}<i class="fas fa-server"></i>&nbsp;&nbsp; CẬP NHẬT DỮ LIỆU {% endblock bnt-action  %}
+                          </button>  
+                      </div>
+                  </div>
+              </div>
+          </form> 
+      </div>
+    </div>
+  </div>
+</div>

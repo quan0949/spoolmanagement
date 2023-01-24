@@ -1,0 +1,357 @@
+{% extends 'partials/base.html' %} 
+{% load static %} 
+{% block title %}Input Data Page{% endblock %} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/css/sideheader.css' %}" />
+{% endblock %}
+
+{% block content %}
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+<!-- Content Body Start -->
+
+<div class="content-body">
+
+  <!-- Page Headings Start -->
+  <div class="row justify-content-between align-items-center mb-10">
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+      <div class="page-heading">
+        <h3 class="title">QLSX Spool <span>/ Nhập thực tích</span></h3>
+      </div>
+    </div>
+    <!-- Page Heading End -->
+  </div>
+  <!-- Page Headings End -->
+
+  <!--Input Production Data Start-->
+  <form method="POST" {% block action  %} action="/inputdata/" {% endblock action %} autocomplete="on" id="post-form">
+    {% csrf_token %}
+    <div class="row">
+      <!-- Block ID (Root) -->
+      <div class="col col-3">
+        <!-- Column 1 -->
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">Ngày SX</span>
+          <input type="date" name="issue_date" class="form-control col-8" />
+        </div>
+        <div class="input-group mb-1">
+          <label class="input-group-text col-4">Ca SX</label>
+          <select class="form-select col-8" id="shift-no">
+            <option value="1" selected>Ca HC</option>
+            <option value="2">Ca 1</option>
+            <option value="3">Ca 2</option>
+          </select>
+        </div>
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">Nhân viên</span>
+          <input
+            type="text"
+            name="employee_name"
+            class="form-control col-8"
+            placeholder="Tên nhân viên"
+          />
+        </div>
+      </div>
+      <div class="col col-3">
+        <!-- Column 2 -->
+        <div class="input-group mb-1" id="production_code">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">CTSX</span>
+          <input
+            type="text"
+            name="production_code"
+            class="form-control col-8"
+            placeholder="Nhập mã CTSX"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">Mã SP</span>
+          <input
+            id="product_code"
+            type="text"
+            name="product_code"
+            class="form-control col-8"
+            placeholder="Điền tự động"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">TG SX</span>
+          <input
+            type="number"
+            name="production_time"
+            class="form-control col-8"
+            value="0"
+          />
+        </div>
+      </div>
+      <div class="col col-3">
+        <!-- Column 3 -->
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">SL SX</span>
+          <input
+            type="number"
+            name="product_quantity"
+            class="form-control col-8"
+            value="0"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">SL NG</span>
+          <input
+            type="number"
+            name="ng_quantity"
+            class="form-control col-8"
+            value="0"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">Công đoạn</span>
+          <input
+            type="text"
+            name="stage"
+            class="form-control col-8"
+            placeholder="Điền công đoạn"
+          />
+        </div>
+      </div>
+      <div class="col col-3">
+        <!-- Column 4 -->
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">Mã thùng</span
+          >
+          <input
+            type="text"
+            name="basket"
+            class="form-control col-8"
+            placeholder="Điền mã thùng"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <span class="input-group-text col-4" id="inputGroup-sizing-default">Mã phiếu</span>
+          <input
+            type="text"
+            name="note"
+            class="form-control col-8"
+            placeholder="Điền phiếu"
+          />
+        </div>
+        <div class="input-group mb-1">
+          <button type="submit" class="form-control btn-send text-white">
+            {% block bnt-action  %}<i class="fas fa-plus"></i>&nbsp;&nbsp; GỬI BÁO CÁO {% endblock bnt-action  %}
+          </button>  
+
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--Input Production Data End-->
+
+  <!--Data Table Start-->
+    <div class="row">
+        <div class="col-12 mb-30">
+          <div class="box">
+            <div class="box-head">
+              <h3 class="title">Lịch sử nhập dữ liệu</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped" id="production-table" style="text-align: center;">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 5%">ID</th>
+                            <th style="width: 13%">Ngày sản xuất</th>
+                            <th style="width: 13%">CTSX</th>
+                            <th style="width: 13%">Mã sản phẩm</th>
+                            <th style="width: 13%">Số lượng SX</th>
+                            <th style="width: 13%">Số lượng NG</th>
+                            <th style="width: 13%">Công đoạn</th>
+                            <th style="width: 20%">Tên nhân viên</th>
+                            <th style="width: 5%">Sửa</th>
+                            <!--<th style="width: 15%">Xóa</th>-->
+                        </tr>
+                    </thead>
+                    <!-- JSON Response from backend -->
+                    {% for production in production_data %}
+                    <tr>
+                        <td>{{ production.id }}</td>
+                        <td>{{ production.issue_date | date:'d/m/Y' }}</td>
+                        <td>{{ production.production_code }}</td>
+                        <td>{{ production.product_code }}</td>
+                        <td>{{ production.product_quantity }}</td>
+                        <td>{{ production.ng_quantity }}</td>
+                        <td>{{ production.stage }}</td>
+                        <td>{{ production.employee_name }}</td>
+                        <td>
+                          <a class="btn btn-dark text-center" title="Sửa dữ liệu" data-bs-toggle="modal" data-bs-target="#editModal{{ production.pk }}">
+                              <i class="fas fa-pen" style="color:#fff;"></i>
+                        </td> 
+                    </tr>
+                      <!-- Incldude -->
+                      {% include '3. production/edit_inputdata.html' %}
+
+                    <!-- Delete production data -->
+                    <div class="modal fade" id="deleteModal{{ production.pk }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="text-center text-danger"><i class="far fa-times-circle fa-5x mb-4 mt-2"></i></div>
+                            <div class="text-center text-danger">
+                              <span>XÁC NHẬN XOÁ DỮ LIỆU ?</span>
+                              <div class="text-dark mt-3 mb-2">Mã sản phẩm:<strong>{{ production.product_code }}</strong></div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <a href="/delete_production_data/{{ production.id }}" class="btn btn-outline-danger">Xoá</a >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {% endfor %}
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!--Data Table End-->
+
+</div>
+
+
+
+{% for message in messages %}
+  {% if message.tags == 'success' %}
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    var m = "{{ message }}";
+    swall("perfect !", m, "success")
+  </script>
+  {% endif %}
+{% endfor %}  
+
+<!-- Content Body End -->
+
+
+{% endblock %}
+
+
+{% block js %}
+
+<!-- Plugins & Activation JS For Only This Page -->
+
+<!--Display Side header-->
+
+<script src="{% static '/js/plugins/datatables/datatables.min.js' %}"></script>
+<script src="{% static '/js/plugins/datatables/datatables.active.js' %}"></script>
+
+<script src="{% static '/js/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static '/js/plugins/footable/footable.min.js' %}"></script>
+<script src="{% static '/js/plugins/footable/footable.active.js' %}"></script>
+
+<script src="{% static '/js/ajax.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#production-table thread tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#production-table thread');
+
+        var table = $('#production-table').DataTable({
+            // "ajax": "/json",
+            // "columns": [
+            //     {"data": "id"},
+            //     {"data": "name"},
+            //     {"data": "email"},
+            //     {"data": "occupation"},
+            //     {"data": "salary"},
+            //     {"data": "gender"},
+            // ],
+            // Datatables configurations
+            paging: true, // Pagination
+            pageLength: 12, // Data per page
+            lengthChange: true, // Show entries per page
+            autoWidth: false, // Control the auto width on columns
+            searching: true, // Input search
+            bInfo: true, // Infor on footer
+            bSort: true, // Filter A to Z and Z to A
+            order: [],
+            responsive: false,
+            // Disable columns with specific filter A to Z
+            //"columnDef": [{
+            //    //"targets": 5,
+            //    "targets": [4,5],
+            //    "orderable": false
+            //}]
+            dom: 'lBfrtip',
+            //buttons: ["copy", "csv", "excel", "pdf", "print"],
+
+            buttons: [
+                {   
+                    extend: 'copy',
+                    text: 'copy',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'Copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    },
+                },
+                {
+                    extend: 'excel',
+                    text: 'excel',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'excel',
+                    exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                    },
+                },
+                {
+                    extend: 'pdf',
+                    text: 'pdf',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'PDF',
+                    exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                    },
+                    tableHeader: {
+                    alignment: 'center'
+                    },
+                    //customize: function (doc) {
+                    //doc.style.tableHeader.alignment = 'center'; // Header position
+                    //doc.style.tableBodyOdd.alignment = 'center'; // Body position 1 (grey)
+                    //doc.style.tableBodyEven.alignment = 'center'; // Body position 1 (white)
+                    //doc.style.tableHeader.fontSize = 7; // Header font-size
+                    //doc.defaultStyle.fontSize = 6; // Body font-size
+                    // To get 100% width of the table
+                    //doc.content[1].table.widths = Array(doc.content[1].table.body[1].length + 1).join('*').split('');
+                    //},
+                },
+                {
+                    extend: 'print',
+                    text: 'print',
+                    className: 'btn btn-secondary',
+                    titleAttr: 'print',
+                    exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5]
+                    },
+                    customize: function (win) {
+                    $(win.document.body).css('font-size','10pt'),
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                    }
+                },
+            ]            
+        });
+    });
+</script>
+
+{% endblock %}

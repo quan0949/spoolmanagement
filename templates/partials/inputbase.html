@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js' %}" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static '/images/smc.ico' %}"
+    />
+
+    <!-- CSS
+    ============================================ -->
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static '/css/vendor/bootstrap.min.css' %}"
+    />
+
+    <!-- Icon Font CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static '/css/vendor/material-design-iconic-font.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static '/css/vendor/font-awesome.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static '/css/vendor/themify-icons.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static '/css/vendor/cryptocurrency-icons.css' %}"
+    />
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="{% static '/css/plugins/plugins.css' %}" />
+
+    <!-- Helper CSS -->
+    <link rel="stylesheet" href="{% static '/css/helper.css' %}" />
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+
+    <!-- Fontawesome -->
+    <link type="text/css" rel="stylesheet" href="{% static '/css/vendor/fontawesome-free/css/all.min.css' %}"/>
+
+  </head>
+
+  <body>
+    <div class="main-wrapper">
+      <!-- Header Section Start -->
+      {% include 'partials/header.html' %}
+      <!-- Header Section End -->
+
+      <!-- Side Header Start -->
+      {% include 'partials/sideheader.html' %}
+      <!-- Side Header End -->
+
+      {% block content %}
+
+      <!-- Content Body Start -->
+      <!-- Content Body End -->
+
+      {% endblock %}
+    </div>
+  </body>
+
+  <!-- Global Vendor, plugins & Activation JS -->
+  <script src="{% static '/js/vendor/modernizr-3.6.0.min.js' %}"></script>
+  <script src="{% static '/js/vendor/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static '/js/vendor/popper.min.js' %}"></script>
+  <script src="{% static '/js/vendor/bootstrap.min.js' %}"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"
+  ></script>
+  <!--Plugins JS-->
+  <script src="{% static '/js/plugins/perfect-scrollbar.min.js' %}"></script>
+  <script src="{% static '/js/plugins/tippy4.min.js.js' %}"></script>
+  <!--Main JS-->
+  <script src="{% static '/js/main.js' %}"></script>
+
+  {% block js %}
+  <!-- Plugins & Activation JS For Only This Page -->
+
+  <!--Moment-->
+  <script src="{% static '/js/plugins/moment/moment.min.js' %}"></script>
+
+  <!--Daterange Picker-->
+  <script src="{% static '/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
+  <script src="{% static '/js/plugins/daterangepicker/daterangepicker.active.js' %}"></script>
+
+  <!--Echarts-->
+  <script src="{% static '/js/plugins/chartjs/Chart.min.js' %}"></script>
+  <script src="{% static '/js/plugins/chartjs/chartjs.active.js' %}"></script>
+
+  <!--VMap-->
+  <script src="{% static '/js/plugins/vmap/jquery.vmap.min.js' %}"></script>
+  <script src="{% static '/js/plugins/vmap/maps/jquery.vmap.world.js' %}"></script>
+  <script src="{% static '/js/plugins/vmap/maps/samples/jquery.vmap.sampledata.js' %}"></script>
+  <script src="{% static '/js/plugins/vmap/vmap.active.js' %}"></script>
+  {% endblock %}
+</html>
